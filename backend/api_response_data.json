@@ -1,0 +1,59 @@
+{
+  "activities": [
+    {
+      "id": 1,
+      "name": "Explore New York City",
+      "image": "https://images.unsplash.com/photo-1511882150382-421056c89033",
+      "type": "Outdoor",
+      "tags": [
+        "Romantic",
+        "Adventurous"
+      ],
+      "description": "Take a romantic walk through the beautiful streets of New York City and discover hidden gems together."
+    },
+    {
+      "id": 2,
+      "name": "Movie Night",
+      "image": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba",
+      "type": "Entertainment",
+      "tags": [
+        "Relaxed",
+        "Indoor",
+        "Cozy"
+      ],
+      "description": "Enjoy a classic film at a vintage theater in New York City."
+    }
+  ],
+  "restaurants": [
+    {
+      "id": 1,
+      "name": "New York City Bistro",
+      "image": "https://images.unsplash.com/photo-1555126634-323283e090fa",
+      "cuisine": "French",
+      "rating": 4.7,
+      "distance": "0.8 miles from center of New York City",
+      "vibe": [
+        "Romantic",
+        "Intimate"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Retro Diner",
+      "image": "https://images.unsplash.com/photo-1514933651103-005eec06c04b",
+      "cuisine": "American",
+      "rating": 4.5,
+      "distance": "1.2 miles from center of New York City",
+      "vibe": [
+        "Nostalgic",
+        "Casual"
+      ]
+    }
+  ],
+  "surprise": {
+    "id": 1,
+    "name": "Mixtape Creation",
+    "description": "Create a custom digital mixtape of songs that remind you of each other. Find a local record store in New York City to browse for inspiration.",
+    "image": "https://images.unsplash.com/photo-1619983081563-430f63602796"
+  }
+}

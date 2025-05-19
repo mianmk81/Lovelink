@@ -1,0 +1,15 @@
+<svg width="100%" height="100%" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+  <!-- Background -->
+  <rect x="0" y="0" width="32" height="32" fill="#222222"/>
+  
+  <!-- Basketball -->
+  <rect x="8" y="8" width="16" height="16" fill="#333333"/>
+  <rect x="8" y="16" width="16" height="1" fill="#00ffff"/>
+  <rect x="16" y="8" width="1" height="16" fill="#00ffff"/>
+  
+  <!-- Basketball lines -->
+  <rect x="8" y="12" width="16" height="1" fill="#00ffff"/>
+  <rect x="8" y="20" width="16" height="1" fill="#00ffff"/>
+  <rect x="12" y="8" width="1" height="16" fill="#00ffff"/>
+  <rect x="20" y="8" width="1" height="16" fill="#00ffff"/>
+</svg>

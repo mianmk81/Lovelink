@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoveLink '89 - Login</title>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ff7eb3, #ff758c);
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+        }
+        h1 {
+            text-align: center;
+            color: #ff4081;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #ff4081;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #e91e63;
+        }
+        .divider {
+            text-align: center;
+            margin: 20px 0;
+            color: #666;
+        }
+        .divider::before,
+        .divider::after {
+            content: "";
+            display: inline-block;
+            width: 40%;
+            border-bottom: 1px solid #ddd;
+            vertical-align: middle;
+            margin: 0 10px;
+        }
+        #googleBtn {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .tab-container {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            background-color: #f1f1f1;
+            cursor: pointer;
+        }
+        .tab.active {
+            background-color: #ff4081;
+            color: white;
+        }
+        #registerForm {
+            display: none;
+        }
+        .response {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>LoveLink '89</h1>
+        
+        <div class="tab-container">
+            <div class="tab active" onclick="showTab('login')">Login</div>
+            <div class="tab" onclick="showTab('register')">Register</div>
+        </div>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="loginEmail">Email</label>
+                <input type="email" id="loginEmail" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="loginPassword">Password</label>
+                <input type="password" id="loginPassword" name="password" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="registerName">Name</label>
+                <input type="text" id="registerName" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="registerEmail">Email</label>
+                <input type="email" id="registerEmail" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="registerPassword">Password</label>
+                <input type="password" id="registerPassword" name="password" required>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+        
+
+        
+        <div id="response" class="response"></div>
+    </div>
+
+    <script>
+        // Use relative URL to work with any domain (local or ngrok)
+        const API_URL = '/api/auth';
+        
+        // Initialize Supabase client
+        // Note: You'll need to replace these with your actual Supabase URL and anon key
+        const SUPABASE_URL = ''; // Will be populated from backend
+        const SUPABASE_KEY = ''; // Will be populated from backend
+        let supabase = null;
+        
+        // Fetch Supabase configuration from the server
+        async function initializeSupabase() {
+            try {
+                const response = await fetch('/api/auth/supabase-config');
+                const config = await response.json();
+                
+                if (config.url && config.key) {
+                    supabase = supabase.createClient(config.url, config.key);
+                    console.log('Supabase client initialized');
+                } else {
+                    console.error('Missing Supabase configuration');
+                }
+            } catch (error) {
+                console.error('Failed to initialize Supabase:', error);
+            }
+        }
+        
+        // Initialize Supabase when the page loads
+        document.addEventListener('DOMContentLoaded', initializeSupabase);
+        
+        // Show login or register form
+        function showTab(tab) {
+            if (tab === 'login') {
+                document.getElementById('loginForm').style.display = 'block';
+                document.getElementById('registerForm').style.display = 'none';
+                document.querySelector('.tab:nth-child(1)').classList.add('active');
+                document.querySelector('.tab:nth-child(2)').classList.remove('active');
+            } else {
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('registerForm').style.display = 'block';
+                document.querySelector('.tab:nth-child(1)').classList.remove('active');
+                document.querySelector('.tab:nth-child(2)').classList.add('active');
+            }
+        }
+        
+        // Handle login form submission
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            try {
+                const response = await fetch(`${API_URL}/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: `username=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResponse('Login successful!', true);
+                    // Store token and user info
+                    localStorage.setItem('token', data.access_token);
+                    localStorage.setItem('user', JSON.stringify({
+                        id: data.user_id,
+                        name: data.name,
+                        profile_picture: data.profile_picture
+                    }));
+                    
+                    // Redirect or update UI
+                    setTimeout(() => {
+                        alert('Login successful! Token: ' + data.access_token);
+                    }, 1000);
+                } else {
+                    showResponse(`Error: ${data.detail}`, false);
+                }
+            } catch (error) {
+                showResponse(`Error: ${error.message}`, false);
+            }
+        });
+        
+        // Handle register form submission
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            
+            try {
+                const response = await fetch(`${API_URL}/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name,
+                        email,
+                        password
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResponse('Registration successful!', true);
+                    // Store token and user info
+                    localStorage.setItem('token', data.access_token);
+                    localStorage.setItem('user', JSON.stringify({
+                        id: data.user_id,
+                        name: data.name,
+                        profile_picture: data.profile_picture
+                    }));
+                    
+                    // Redirect or update UI
+                    setTimeout(() => {
+                        alert('Registration successful! Token: ' + data.access_token);
+                    }, 1000);
+                } else {
+                    showResponse(`Error: ${data.detail}`, false);
+                }
+            } catch (error) {
+                showResponse(`Error: ${error.message}`, false);
+            }
+        });
+        
+        // Show response message
+        function showResponse(message, isSuccess) {
+            const responseElement = document.getElementById('response');
+            responseElement.textContent = message;
+            responseElement.style.display = 'block';
+            
+            if (isSuccess) {
+                responseElement.classList.add('success');
+                responseElement.classList.remove('error');
+            } else {
+                responseElement.classList.add('error');
+                responseElement.classList.remove('success');
+            }
+            
+            // Hide after 5 seconds
+            setTimeout(() => {
+                responseElement.style.display = 'none';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

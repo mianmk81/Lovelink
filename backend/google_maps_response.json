@@ -1,0 +1,22 @@
+[
+  {
+    "name": "La Famiglia Giorgio's Restaurant",
+    "dietary_friendly": "Italian, vegetarian",
+    "things_to_order": "Chef's choice",
+    "price_level": 2,
+    "rating": 4.4,
+    "budget_range": "$$",
+    "parking_tip": "TBD",
+    "walkable_from": "TBD"
+  },
+  {
+    "name": "Terramia Ristorante",
+    "dietary_friendly": "Italian, vegetarian",
+    "things_to_order": "Chef's choice",
+    "price_level": 3,
+    "rating": 4.4,
+    "budget_range": "$$$",
+    "parking_tip": "TBD",
+    "walkable_from": "TBD"
+  }
+]

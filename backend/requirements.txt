@@ -1,0 +1,13 @@
+passlib[bcrypt]
+python-jose[cryptography]
+python-multipart
+requests
+fastapi
+uvicorn
+httpx
+python-dotenv
+pydantic
+google-generativeai
+pytest
+email-validator
+supabase>=2.0.0

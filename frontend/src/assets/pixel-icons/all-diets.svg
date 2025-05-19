@@ -1,0 +1,14 @@
+<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .pixel { shape-rendering: crispEdges; }
+    .neon-green { fill: #00ff00; }
+  </style>
+  <g class="pixel">
+    <rect class="neon-green" x="4" y="4" width="4" height="16"/>
+    <rect class="neon-green" x="10" y="4" width="4" height="16"/>
+    <rect class="neon-green" x="16" y="4" width="4" height="16"/>
+    <rect class="neon-green" x="4" y="4" width="16" height="2"/>
+    <rect class="neon-green" x="4" y="12" width="16" height="2"/>
+    <rect class="neon-green" x="4" y="18" width="16" height="2"/>
+  </g>
+</svg>
